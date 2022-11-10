@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'base.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Figure</title>
+    
+</head>
+<body>
+<form method="POST" >
+{% csrf_token %}
+<br>
+{{food}}
+{{cust}}
+{{order}}
+{{totalam}}<br><br>
+<a href="/graphone/">Graph 1</a>
+<a href="/graphtwo/">graph 2</a>
+<a href="/graphthree/">graph 3</a>
+<a href="/graphfour/">graph 4</a>
+    </form>
+</body>
+</html>

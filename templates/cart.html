@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>CART</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $(".qnty").change(function(){
+                totalprice(this);
+                console.log("hello world");
+            });
+            $(".qnty").blur(function(){
+                totalprice(this);
+            });
+        });
+        function totalprice(control){
+            console.log("hello");
+            var price = parseFloat($(control).parent().prev().html());
+            $(control).parent().next().find('.foodPrice').val(price * parseFloat($(control).val()))
+            var id = Number($(control).next().val());
+            var price = Number($(control).parent().next().find('.foodPrice').val());
+            update(control, id, price);
+            finalprice();
+        }
+        function finalprice(){
+            var totalamt = 0;
+            $('.foodPrice').each(function(){
+                totalamt += parseFloat($(this).val());
+            });
+            $('#total').val(totalamt)
+        }
+        function update(ctrl, id, price){
+            if ($(ctrl).val() === undefined){
+                $(ctrl).val('0');
+                return;
+            }
+            let quantity = Number($(ctrl).val());
+            $.ajax({
+                url: '/updatequantity/',
+                method: 'POST',
+                async: true,
+                cache: false,
+                data: {'q': quantity, 'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id, 'p': price},
+                success: function(data){
+
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<form method="POST" action="/order/">
+{% csrf_token %}
+<br><br>
+    <table class="table table-condensed" cellpadding="5px">
+        <tr>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        {% for cart in mycart %}
+        <tr>
+            <td>{{cart.foodName}}</td>
+            <td>{{cart.foodPrice}}</td>
+            <td>
+                <input type="number" min="1" name="foodQuantity" class="qnty" value="{{cart.foodQuantity}}">
+                <input type="hidden" id="foodId{{cart.cartId}}" name="foodId" value="{{cart.foodId}}">
+                <input type="hidden" class="cartId" name="cartId" id="{{cart.cartid}}" value="{{cart.foodQuantity}}">
+            </td>
+            <td>
+                <input name="totaperprice" type="text" class="foodPrice" value="{{cart.total}}" readonly>
+            </td>
+            <td>
+                <a href="/deletecart/{{cart.cartId}}">delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <label>Total Amount: </label>
+   
+    <input type="text" id="total" name="Totalbill" readonly>
+    <input type="submit" value="Place Order">
+    {% endblock %}
+    </form>
+</body>
+</html>

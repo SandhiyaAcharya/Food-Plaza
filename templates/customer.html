@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include 'base.html' %}
+<table style="margin:10px ">
+<tr>
+<th>CustomerId</th>
+<th>CustomerName</th>
+<th>CustomerEmail</th>
+<th>CustomerPassword</th>
+<th>CustomerContact</th>
+<th>CustomerAddress</th>
+<th>Actions</th>
+</tr>
+{% for i in cust%}
+<tr style="padding:10px">
+<td>{{i.customerId}}</td>
+<td>{{i.customerName}}</td>
+<td>{{i.customerEmail}}</td>
+<td>{{i.customerPassword}}</td>
+<td>{{i.customerContact}}</td>
+<td>{{i.customerAddress}}</td>
+<td><a href="/updatecust/{{i.customerId}}">Update</a></td>
+<td><a href="/deletecust/{{i.customerId}}">Delete</a></td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>

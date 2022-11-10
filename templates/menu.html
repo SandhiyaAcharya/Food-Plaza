@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{%load static%}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+<script>
+        $(document).ready(function(){
+           $('.addcart').click(function(){
+               
+               $.ajax({
+                    url: '/addtocart',
+                    method: 'GET',
+                    async: true,
+                    cache: false,
+                    data: {'foodId': $(this).attr('id')},
+                    success:
+                    function(response){
+                        
+                        if(response.done === 'true'){
+                            $('#messagebox').html('added to cart');
+                            $('#messagebox').removeClass('error');
+                            $('#messagebox').addClass('success');
+                            $('#messagebox').show();
+                            setTimeout(hideBox, 1000);
+                        }
+                    },
+                    error:
+                    function(a,b,c){
+                        $('#messagebox').html('some error occured');
+                        $('#messagebox').removeClass('success');
+                        $('#messagebox').addClass('error');
+                        $('#messagebox').show();
+                        setTimeout(hideBox, 1000);
+                    }
+               });
+                 function hideBox(){
+                    $('#messageBox').fadeOut()
+                }
+           });
+        });
+
+    </script>
+<style>
+    table{
+         border: 2px solid black;
+    }
+    td{
+        border: 1px solid black;
+    }
+    tr{
+        border: 1px solid black;
+    }
+    th{
+        border: 2px solid black;   
+    }
+</style>
+
+</head>
+<body>
+{% include 'base.html' %}
+<table >
+<tr style="margin-top: 20px;" >
+<th style="Padding: 10px 40px">FoodId</th>
+<th style="Padding: 10px 40px">FoodName</th>
+<th style="Padding: 10px 40px">FoodCat</th>
+<th style="Padding: 10px 40px">FoodType</th>
+<th style="Padding: 10px 40px">FoodPrice</th>
+<th style="Padding: 10px 40px">FoodQuantity</th>
+<th style="Padding: 10px 40px">FoodImg</th>
+<th style="Padding: 10px 40px">Actions</th>
+</tr>
+{% for i in menu%}
+<tr >
+<td style="Padding: 10px 40px">{{i.foodId}}</td>
+<td style="Padding: 10px 40px">{{i.foodName}}</td>
+<td style="Padding: 10px 40px">{{i.foodCat}}</td>
+<td style="Padding: 10px 40px">{{i.foodType}}</td>
+<td style="Padding: 10px 40px">{{i.foodPrice}}</td>
+<td style="Padding: 10px 40px">{{i.foodQuantity}}</td>
+<td style="Padding: 10px 40px"><img style="border-radius: 4px;  max-width: 40%; height: auto;" src="{{i.foodImage.url}}"/></td>
+{% if request.session.adminId %}
+<td style="Padding: 10px 40px"><a href="/update/{{i.foodId}}">Update</a></td>
+<td style="Padding: 10px 40px"><a href="/delete/{{i.foodId}}">Delete</a></td>
+{% endif %}
+{% if request.session.userId %}
+<td><span class="addcart" id="{{i.foodId}}">Add To Cart</span></td>
+{% endif%}
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>

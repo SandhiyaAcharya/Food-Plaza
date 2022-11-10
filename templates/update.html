@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include 'base.html' %}
+<form method="post" >
+{% csrf_token%}
+{{cust.as_p}}
+<input type="number" value="{{data.foodId}}" name="foodId">
+<input type="text" value="{{data.foodName}}" name="foodName">
+<input type="text" value="{{data.foodCat}}" name="foodCat">
+<input type="text" value="{{data.foodType}}" name="foodType">
+<input type="number" value="{{data.foodPrice}}" name="foodPrice">
+<input type="number" value="{{data.foodQuantity}}" name="foodQuantity">
+<input type="image" value="{{data.foodImage.url}}" name="foodImage">
+<input type="submit" value="submit">
+</form>
+</body>
+</html>

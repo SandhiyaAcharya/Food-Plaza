@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    {% load static%}
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="{%static ' js/jquery.min.js'%}"></script>
+    <script>
+    $(document).ready(function(){
+        setTimeout(hideBox,1000);
+    });
+
+    function hideBox()
+    {
+        $('#i1').fadeOut();
+    }
+    </script>
+</head>
+<body>
+{% include "base.html"%}
+<h2 id="i1">{{success}}</h2>
+</body>
+</html>

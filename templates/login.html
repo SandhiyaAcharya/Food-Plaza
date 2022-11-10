@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include 'base.html' %}
+{% csrf_token %}
+<form method="post" action="/doLogin">
+{% csrf_token %}
+<table>
+
+<tr>
+<td>User type</td>
+<td>
+<label><input type="radio" name="type" value="user">User</label>
+<label><input type="radio" name="type" value="admin">Admin</label>
+</td>
+</tr>
+
+<tr>
+<td>UserId</td>
+<td><input id="email1" type="text" name="userId"></td>
+</tr>
+
+<tr>
+<td>Password</td>
+<td><input type="password" name="password"></td>
+</tr>
+
+<tr>
+<td><input type="submit" value="Login"></td>
+</tr>
+
+</table>
+</form>
+</body>
+</html>

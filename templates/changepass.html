@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "base.html" %}
+{% block content%}
+<form method="post" action="/changepass/">
+    {% csrf_token %}
+        <table>
+            {% if request.session.userId %}
+            <tr>
+                <td><input type="text" value="{{request.session.userId}}" readonly><br></td>
+            </tr>
+            {% elif request.session.adminId %}
+            <tr>
+                <td><input type="text" value="{{request.session.adminId}}" readonly><br></td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Old Password:</th>
+                <td><input type="text" name="old"><br></td>
+            </tr>
+            <tr>
+                <th>New Password:</th>
+                <td><input type="text" name="new"><br></td>
+            </tr>
+            <tr>
+                <th>Confirm New Password:</th>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Submit"></td>
+            </tr>
+        </table>
+</form>
+{% endblock %}
+</body>
+</html

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'base.html' %}
+{% block content %}
+<body>
+<form method="POST" >
+{% csrf_token %}
+<br><br>
+    <table cellpadding="5px">
+    
+        <th>OrderId</th>
+        <th>FoodName</th>
+        <th>foodQuantity</th>
+        <th>FoodPrice</th>
+        <th>Date</th>
+        <th>Price</th>
+        {% for i in orders%}
+        <td>{{i.ordId}}</td>
+        <td>{{i.foodname}}</td>
+        <td>{{i.foodquant}}</td>
+        <td>{{i.foodprice}}</td>
+        <td>{{i.date}}</td>
+        <td>{{i.price}}</td>
+        {%endfor%}
+    </table>
+    
+    </form>
+</body>
+{%endblock%}
+</html>
